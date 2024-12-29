@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.UI;
+using System.Collections; // (For SpilProgrammering exam project)
+
 
 public class TankHealth : MonoBehaviour
 {
@@ -10,12 +13,10 @@ public class TankHealth : MonoBehaviour
     public Color m_ZeroHealthColor = Color.red;    
     public GameObject m_ExplosionPrefab;
     
-
     private AudioSource m_ExplosionAudio;          
     private ParticleSystem m_ExplosionParticles;   
     private float m_CurrentHealth;  
-    private bool m_Dead;            
-
+    private bool m_Dead;
 
     private void Awake()
     {
@@ -24,6 +25,21 @@ public class TankHealth : MonoBehaviour
 
         m_ExplosionParticles.gameObject.SetActive(false);
     }
+
+    // *****************************************(For SpilProgrammering exam project)
+    public void RestoreHealth(int amount)
+    {
+        m_CurrentHealth += amount;
+
+        // Clamp health to ensure it doesn't exceed the starting health
+        m_CurrentHealth = Mathf.Clamp(m_CurrentHealth, 0, m_StartingHealth);
+
+        // Update the health UI
+        SetHealthUI();
+
+        Debug.Log($"Health restored. Current health: {m_CurrentHealth}");
+    }
+    // *****************************************
 
 
     private void OnEnable()
